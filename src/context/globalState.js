@@ -1,9 +1,13 @@
-import React, { createContext, useReducer, useContext } from 'react';
+import React, { createContext, useReducer, useContext, useEffect } from 'react';
 import AppReducer from '../store/appReducer'
-
+import { loadBlockchain } from '../store/asyncAction'
 const initialState = {
-    web3: null
-
+    transactions: [],
+    web3: null,
+    accounts: [],
+    contract: null,
+    web3LoadingErrorMessage: "",
+    web3Loadded: false
 }
 
 
@@ -15,7 +19,9 @@ export const GlobalContext = createContext(initialState);
 export const GlobalProvider = ({ children }) => {
     const [state, dispatch] = useReducer(AppReducer, initialState);
 
-
+    useEffect(() => {
+        loadBlockchain(dispatch)
+    }, [])
 
     return (<GlobalContext.Provider value={[state, dispatch]}>
         {children}

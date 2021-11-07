@@ -1,26 +1,21 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useStore } from './context/globalState';
-// import ChildComponent from './child'
-import { loadBlockchain } from './store/asyncAction'
+import TransactionList from './components/transactionList';
+import AddTransaction from './components/addTransaction';
+import Header from './components/header';
+import Balance from './components/balance';
+import IncomeExpenses from './components/incomeExpenses'
 function App() {
 
-  const [{ post, web3 }, dispatch] = useStore();
-
-  const [value, setValue] = useState()
-
-
-  console.log("post", post)
-  console.log("value", value)
-
-  console.log("app web3", web3)
-
-  const handleSubmit = () => {
-    loadBlockchain(dispatch)
-  }
+  const [{ post, web3, contract, accounts, transactions }, dispatch] = useStore();
   return (
-    <div className="App">
-      <button onClick={handleSubmit}>Load Web3</button>
+    <div className="container">
+      <Header />
+      <Balance/>
+      <IncomeExpenses/>
+      <TransactionList />
+      <AddTransaction />
     </div>
   );
 }
